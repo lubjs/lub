@@ -1,0 +1,36 @@
+{
+  "name": "lub",
+  "version": "0.1.0",
+  "description": "A frontend engineering tool.",
+  "keywords": [
+    "frontend",
+    "boilerplate",
+    "tool"
+  ],
+  "author": "ahungrynoob <dxd_sjtu@outlook.com>",
+  "homepage": "https://github.com/lubjs/lub",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lubjs/lub.git"
+  },
+  "scripts": {
+    "test": "egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov"
+  },
+  "bugs": {
+    "url": "https://github.com/lubjs/lub/issues"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.14.0"
+  }
+}
