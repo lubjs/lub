@@ -4,11 +4,10 @@ node_js:
   - '8'
   - '10'
   - '12'
-before_install:
-  - npm i npminstall -g
 install:
-  - npminstall
+  - npm install
+  - npm install -g codecov
 script:
   - npm run ci
 after_script:
-  - npminstall codecov && codecov
+  - codecov
