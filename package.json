@@ -1,6 +1,7 @@
 {
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "install": "lerna bootstrap",
     "lint": "make lint",
     "test": "make test",
     "clean": "make clean",
