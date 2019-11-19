@@ -94,15 +94,21 @@ lubLog.watch({
 
 ## API
 
-#### lubLog.<logger>(message[, message]|messageObj|errorObj)
+#### lubLog.`<logger>(message[, message]|messageObj|errorObj)`
+
 ##### **`logger`**
+
 - type: `Function`
+
 One of several log types usually needed mentioned above.
 
 ##### **`message`**
+
 - type: `String`
+
 Can be one or more comma delimited strings. <br />
 They will be formated by [Nodejs's util lib](http://nodejs.cn/api/util.html#util_util_format_format_args);
+
 ```javascript
 const lubLog = require('lub-log')();
 
@@ -118,6 +124,7 @@ lubLog.success('Successful %s', 'operation');
 
 
 ##### **`messageObj`**
+
 - type: `Object`
 
 A object with `prefix`, `message` and `suffix` props.
@@ -130,6 +137,7 @@ lubLog.complete({prefix: '[webpack]', message: 'build successfully', suffix: 'in
 ```
 
 ##### **`errorObj`**
+
 - type: `Error Object`
 
 When you pass an error object, `lub-log` will log stack info:
@@ -161,6 +169,7 @@ Clear the scope name of the logger.
 Defines the setting config of the logger.
 
 ##### **`setting`**
+
 - type: `Object`
 
 The default config value is:
