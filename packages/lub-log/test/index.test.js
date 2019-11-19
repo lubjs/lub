@@ -42,8 +42,28 @@ describe("lub-log", () => {
       global,
       "Date",
       class extends RealDate {
-        constructor() {
-          return new RealDate(1559742365680);
+        getFullYear() {
+          return 2019;
+        }
+
+        getMonth() {
+          return 10;
+        }
+
+        getDate() {
+          return 19;
+        }
+
+        getHours() {
+          return 14;
+        }
+
+        getMinutes() {
+          return 13;
+        }
+
+        getSeconds() {
+          return 10;
         }
       }
     );
@@ -238,7 +258,7 @@ describe("lub-log", () => {
     log.info("hello lub-log");
     assert.equal(
       output,
-      "\u001b[90m[2019-6-5]\u001b[39m \u001b[90m[21:46:5]\u001b[39m \u001b[90m[index.test.js]\u001b[39m \u001b[90m›\u001b[39m \u001b[34m\u001b[4mINFO\u001b[24m     \u001b[39m \u001b[4mhello lub-log\u001b[24m\n"
+      "\u001b[90m[2019-11-19]\u001b[39m \u001b[90m[14:13:10]\u001b[39m \u001b[90m[index.test.js]\u001b[39m \u001b[90m›\u001b[39m \u001b[34m\u001b[4mINFO\u001b[24m     \u001b[39m \u001b[4mhello lub-log\u001b[24m\n"
     );
 
     output = "";
@@ -248,7 +268,7 @@ describe("lub-log", () => {
     log.info("hello lub-log");
     assert.equal(
       output,
-      "\u001b[90m[21:46:5]\u001b[39m \u001b[90m[index.test.js]\u001b[39m \u001b[90m›\u001b[39m \u001b[34m\u001b[4mINFO\u001b[24m     \u001b[39m \u001b[4mhello lub-log\u001b[24m\n"
+      "\u001b[90m[14:13:10]\u001b[39m \u001b[90m[index.test.js]\u001b[39m \u001b[90m›\u001b[39m \u001b[34m\u001b[4mINFO\u001b[24m     \u001b[39m \u001b[4mhello lub-log\u001b[24m\n"
     );
   });
 
