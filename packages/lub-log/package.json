@@ -10,7 +10,8 @@
   "license": "MIT",
   "main": "lib/lub-log.js",
   "files": [
-    "lib"
+    "lib",
+    "index.js"
   ],
   "repository": {
     "type": "git",
@@ -18,14 +19,16 @@
   },
   "scripts": {
     "test": "egg-bin pkgfiles && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov"
+    "test-local": "DEBUG=lub egg-bin test",
+    "cov": "DEBUG=lub egg-bin cov"
   },
   "bugs": {
     "url": "https://github.com/lubjs/lub/issues"
   },
   "devDependencies": {
-    "egg-bin": "^4.14.0"
+    "egg-bin": "^4.14.0",
+    "mm": "^2.5.0",
+    "power-assert": "^1.6.1"
   },
   "dependencies": {
     "chalk": "^3.0.0",

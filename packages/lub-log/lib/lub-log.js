@@ -27,7 +27,7 @@ class LubLog {
         scope: options,
       };
     }
-    this._config = Object.assign(defaultConfig, options.config);
+    this._config = Object.assign({}, defaultConfig, options.config);
     this._scopeName = options.scope || '';
     this._types = defaultTypes;
     this._stream = process.stdout;
@@ -42,15 +42,6 @@ class LubLog {
     return this._scopeName;
   }
 
-  get currentOptions() {
-    return Object.assign(
-      {},
-      {
-        config: this._config,
-      }
-    );
-  }
-
   get date() {
     const _ = new Date();
     return [ _.getFullYear(), _.getMonth() + 1, _.getDate() ].join('-');
@@ -63,7 +54,7 @@ class LubLog {
 
   get filename() {
     const _ = Error.prepareStackTrace;
-    Error.prepareStackTrace = (error, stack) => stack;
+    Error.prepareStackTrace = (_, stack) => stack;
     const { stack } = new Error();
     Error.prepareStackTrace = _;
 
@@ -73,9 +64,7 @@ class LubLog {
       return x !== callers[0];
     });
 
-    return firstExternalFilePath
-      ? path.basename(firstExternalFilePath)
-      : 'anonymous';
+    return path.basename(firstExternalFilePath);
   }
 
   get _longestUnderlinedLabel() {
@@ -94,10 +83,6 @@ class LubLog {
     const { _types } = this;
     const labels = Object.keys(_types).map(x => _types[x].label);
     return labels.reduce((x, y) => (x.length > y.length ? x : y));
-  }
-
-  _formatStream(stream) {
-    return this._arrayify(stream);
   }
 
   _formatDate() {
@@ -253,11 +238,7 @@ class LubLog {
 
   _padEnd(str, targetLength) {
     str = String(str);
-    targetLength = parseInt(targetLength, 10) || 0;
-
-    if (str.length >= targetLength) {
-      return str;
-    }
+    targetLength = parseInt(targetLength, 10);
 
     if (String.prototype.padEnd) {
       return str.padEnd(targetLength);
@@ -280,7 +261,7 @@ class LubLog {
       throw new Error('No scope name was defined.');
     }
 
-    return new LubLog(Object.assign(this.currentOptions, { scope: name }));
+    this._scopeName = name;
   }
 
   unscope() {
