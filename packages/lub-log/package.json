@@ -8,10 +8,10 @@
   "author": "ahungrynoob <dxd_sjtu@outlook.com>",
   "homepage": "https://github.com/lubjs/lub#readme",
   "license": "MIT",
-  "main": "lib/lub-log.js",
+  "main": "index.js",
   "files": [
-    "lib",
-    "index.js"
+    "index.js",
+    "lib"
   ],
   "repository": {
     "type": "git",
