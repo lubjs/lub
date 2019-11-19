@@ -32,7 +32,7 @@ class LubLog {
     this._types = defaultTypes;
     this._stream = process.stdout;
     this._longestLabel = this._getLongestLabel();
-    this._debug = debug(this._scopeName);
+    this._debug = debug(this._formatDebugScopeName());
     Object.keys(this._types).forEach(type => {
       this[type] = this._logger.bind(this, type);
     });
@@ -91,6 +91,15 @@ class LubLog {
 
   _formatFilename() {
     return `[${this.filename}]`;
+  }
+
+  _formatDebugScopeName() {
+    if (Array.isArray(this._scopeName)) {
+      const scopes = this._scopeName.filter(x => x.length !== 0);
+      return `${scopes.map(x => `${x.trim()}`).join(' ')}`;
+    }
+
+    return `${this._scopeName}`;
   }
 
   _formatScopeName() {
@@ -262,6 +271,7 @@ class LubLog {
     }
 
     this._scopeName = name;
+    this._debug = debug(this._formatDebugScopeName());
   }
 
   unscope() {
