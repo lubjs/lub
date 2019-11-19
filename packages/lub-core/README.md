@@ -1,4 +1,4 @@
-# `lub-core`
+# lub-core
 
 > TODO: description
 

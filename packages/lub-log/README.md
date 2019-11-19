@@ -1,4 +1,4 @@
-# `lub-log`
+# lub-log
 
 `lub-log` is a log util when you create your own lub plugin. <br/>
 
