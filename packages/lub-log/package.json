@@ -1,0 +1,38 @@
+{
+  "name": "lub-log",
+  "version": "0.1.0",
+  "description": "Log utils for lubjs",
+  "keywords": [
+    "lub-log"
+  ],
+  "author": "ahungrynoob <dxd_sjtu@outlook.com>",
+  "homepage": "https://github.com/lubjs/lub#readme",
+  "license": "MIT",
+  "main": "lib/lub-log.js",
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lubjs/lub.git"
+  },
+  "scripts": {
+    "test": "egg-bin pkgfiles && npm run test-local",
+    "test-local": "DEBUG=lub egg-bin test",
+    "cov": "DEBUG=lub egg-bin cov"
+  },
+  "bugs": {
+    "url": "https://github.com/lubjs/lub/issues"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.14.0",
+    "mm": "^2.5.0",
+    "power-assert": "^1.6.1"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "debug": "^4.1.1",
+    "figures": "^3.1.0"
+  }
+}
