@@ -9,6 +9,7 @@ lerna-debug.log
 *.stats
 coverage
 node_modules
+!**/test/fixtures/**/node_modules
 packages/*/yarn.lock
 package-lock.json
 .nyc_output
