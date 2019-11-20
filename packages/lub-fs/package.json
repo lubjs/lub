@@ -1,17 +1,17 @@
 {
-  "name": "lub",
-  "version": "0.1.0",
-  "description": "A frontend engineering tool.",
+  "name": "lub-fs",
+  "version": "0.0.0",
+  "description": "File system utils for lubjs",
   "keywords": [
-    "frontend",
-    "boilerplate",
-    "tool"
+    "lubjs",
+    "lub-fs"
   ],
   "author": "ahungrynoob <dxd_sjtu@outlook.com>",
-  "homepage": "https://github.com/lubjs/lub",
+  "homepage": "https://github.com/lubjs/lub#readme",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "index.js",
   "files": [
+    "index.js",
     "lib"
   ],
   "repository": {
@@ -25,6 +25,12 @@
   },
   "bugs": {
     "url": "https://github.com/lubjs/lub/issues"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "lub-log": "^0.1.0",
+    "minimatch": "^3.0.4",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "egg-bin": "^4.14.0"

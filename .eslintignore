@@ -1,4 +1,4 @@
 node_modules
-packages/*/coverage/
-packages/*/test
-!packages/*/test/**/*.test.js
+packages/**/coverage/
+packages/**/test/fixtures
+!packages/**/*.test.js
