@@ -54,12 +54,11 @@ describe('lub-fs/test/copyTpl-sync.test.js', () => {
     asset.equal(content, 'console.log("lub-js");\n');
   });
 
-  it('should not copy node_modules to dest when pass ignore option', () => {
+  it('should not copy node_modules to dest', () => {
     copyTplSync({
       src,
       dest,
       data: { name: 'lub-js' },
-      ignore: [ '**/node_modules' ],
     });
     const fileDirs = fs.readdirSync(dest);
     asset.equal(fileDirs.length, 3);

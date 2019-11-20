@@ -37,7 +37,11 @@ function copyTplSync(options) {
   if (options.templateSettings) {
     _.templateSettings = options.templateSettings;
   }
-  options.ignore = options.ignore || [ 'node_modules', '.idea', '.DS_Store' ];
+  options.ignore = options.ignore || [
+    '**/node_modules',
+    '**/.idea',
+    '**/.DS_Store',
+  ];
 
   function recursiveCopy(from, to) {
     const isIgnore = options.ignore.some(pattern => minimatch(from, pattern));
