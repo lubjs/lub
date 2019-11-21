@@ -1,6 +1,6 @@
 'use strict';
 
-const copyTplSync = require('../lib/copyTpl-sync');
+const { copyTplSync } = require('../index');
 const fs = require('fs-extra');
 const asset = require('assert');
 
@@ -73,5 +73,10 @@ describe('lub-fs/test/copyTpl-sync.test.js', () => {
     });
     const content = fs.readFileSync(`${dest}/foo.js`, 'utf8');
     asset.equal(content, 'lub-js\n');
+  });
+
+  it('should support copy single file', () => {
+    copyTplSync({ src: src + '/foo.js', dest: dest + '/foo_copy.js' });
+    asset.ok(fs.existsSync(dest + '/foo_copy.js'));
   });
 });

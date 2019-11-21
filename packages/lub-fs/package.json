@@ -30,9 +30,11 @@
     "fs-extra": "^8.1.0",
     "lub-log": "^0.1.0",
     "minimatch": "^3.0.4",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "universalify": "^0.1.2"
   },
   "devDependencies": {
-    "egg-bin": "^4.14.0"
+    "egg-bin": "^4.14.0",
+    "mm": "^2.5.0"
   }
 }
