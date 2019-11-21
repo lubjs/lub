@@ -61,7 +61,7 @@ function copyTplSync(options) {
           compiled = compiled.replace(reg, val);
         });
 
-        fs.writeFileSync(to, compiled);
+        fs.outputFileSync(to, compiled);
         log.success(`file written successfully from ${from} to ${to}`);
       } catch (e) {
         log.error(e);
