@@ -10,7 +10,7 @@
   "author": "ahungrynoob <dxd_sjtu@outlook.com>",
   "homepage": "https://github.com/lubjs/lub",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "index.js",
   "files": [
     "lib"
   ],
@@ -28,5 +28,11 @@
   },
   "devDependencies": {
     "egg-bin": "^4.14.0"
+  },
+  "dependencies": {
+    "import-fresh": "^3.2.1",
+    "lub-fs": "^0.0.0",
+    "lub-log": "^0.1.0",
+    "strip-json-comments": "^3.0.1"
   }
 }
