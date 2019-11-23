@@ -22,12 +22,26 @@
 };
  */
 
-'use strict';
-const path = require('path');
-const importFresh = require('import-fresh');
-const fs = require('lub-fs');
-const stripComments = require('strip-json-comments');
-const log = require('lub-log')('lub-core:config-loader');
+"use strict";
+const path = require("path");
+const importFresh = require("import-fresh");
+const stripComments = require("strip-json-comments");
+const log = require("lub-log")("lub-core:config-loader");
+const fs = require("lub-fs");
+
+function normalizeConfig({ plugins, alias, task, ...pluginConfigs }) {
+  plugins = Array.isArray(plugins) ? plugins : [plugins];
+  alias = alias || {};
+  for (const key in task) {
+    task[key] = Array.isArray(task[key]) ? task[key] : [task[key]];
+  }
+  return {
+    plugins,
+    alias,
+    task,
+    ...pluginConfigs
+  };
+}
 
 function loadConfig(filePath) {
   const exist = fs.existsSync(filePath);
@@ -35,20 +49,20 @@ function loadConfig(filePath) {
     return null;
   }
   switch (path.extname(filePath)) {
-    case '.js':
+    case ".js":
       try {
-        return importFresh(filePath);
+        return normalizeConfig(importFresh(filePath));
       } catch (e) {
         log.error(`Error reading Javascript file: ${filePath}`);
         throw e;
       }
-    case '.json':
+    case ".json":
     default:
       try {
         const content = fs
-          .readFileSync(filePath, 'utf8')
-          .replace(/^\ufeff/u, '');
-        return JSON.parse(stripComments(content));
+          .readFileSync(filePath, "utf8")
+          .replace(/^\ufeff/u, "");
+        return normalizeConfig(JSON.parse(stripComments(content)));
       } catch (e) {
         log.error(`Error reading JSON file: ${filePath}`);
         throw e;
