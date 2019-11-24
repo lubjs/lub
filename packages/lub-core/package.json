@@ -11,9 +11,7 @@
   "homepage": "https://github.com/lubjs/lub",
   "license": "MIT",
   "main": "index.js",
-  "files": [
-    "lib"
-  ],
+  "files": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lubjs/lub.git"
