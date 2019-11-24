@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    "lub-plugin-foo",
+    "lub-plugin-bar"
+  ],
+  "lub-plugin-bar": {
+    "env": "build"
+  },
+  "alias": {
+    "lub-plugin-foo": {
+      "dev": "bar-dev"
+    }
+  },
+  "task": {
+    "start": [
+      {
+        "command": "lub run bar",
+        "async": false,
+        "order": "before"
+      },
+      {
+        "command": "lub commit init",
+        "async": true,
+        "order": "after"
+      }
+    ]
+  }
+}

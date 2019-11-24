@@ -1,0 +1,13 @@
+{
+  "plugins": "lub-plugin-foo",
+  "lub-plugin-bar": {
+    "env": "build"
+  },
+  "task": {
+    "start": [
+      {
+        "command": {}
+      }
+    ]
+  }
+}
