@@ -1,0 +1,29 @@
+{
+  "name": "lub-command",
+  "version": "0.0.0",
+  "description": "A command base class to help create plugin",
+  "keywords": [
+    "lubjs",
+    "lub-command"
+  ],
+  "author": "ahungrynoob <dxd_sjtu@outlook.com>",
+  "homepage": "https://github.com/lubjs/lub#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lubjs/lub.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/lubjs/lub/issues"
+  },
+  "dependencies": {
+    "yargs": "^15.0.2"
+  }
+}
