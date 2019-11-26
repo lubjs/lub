@@ -151,7 +151,7 @@ this.options = {
 
 - `* callFn(fn, args, thisArg)` - call fn, support gernerator / async / normal function return promise
 
-**usage:**
+**how to require:**
 ```javascript
 const { helper } = require('lub-command');
 ```
