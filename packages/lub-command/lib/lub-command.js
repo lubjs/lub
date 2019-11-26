@@ -18,6 +18,7 @@ class LubCommand {
   constructor(rawArgv, config) {
     this.rawArgv = rawArgv || process.argv.slice(2);
     this.config = config;
+    this.helper = helper;
     log.debug(
       '[%s] origin argument `%s`',
       this.constructor.name,
@@ -111,7 +112,7 @@ class LubCommand {
 
     const context = this.context;
 
-    yield helper.callFn(this.run, [ context, config ], this);
+    yield this.helper.callFn(this.run, [ context, config ], this);
   }
 
   /**
