@@ -1,0 +1,39 @@
+{
+  "name": "lub-command",
+  "version": "0.0.0",
+  "description": "A command base class to help create plugin",
+  "keywords": [
+    "lubjs",
+    "lub-command"
+  ],
+  "author": "ahungrynoob <dxd_sjtu@outlook.com>",
+  "homepage": "https://github.com/lubjs/lub#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lubjs/lub.git"
+  },
+  "scripts": {
+    "test": "egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov"
+  },
+  "bugs": {
+    "url": "https://github.com/lubjs/lub/issues"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "is-type-of": "^1.2.1",
+    "lub-log": "^0.1.0",
+    "yargs": "^15.0.2"
+  },
+  "devDependencies": {
+    "coffee": "^5.2.2",
+    "egg-bin": "^4.14.0"
+  }
+}
