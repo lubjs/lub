@@ -11,6 +11,7 @@
   "license": "MIT",
   "main": "index.js",
   "files": [
+    "index.js",
     "lib"
   ],
   "repository": {
@@ -18,12 +19,21 @@
     "url": "git+https://github.com/lubjs/lub.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov"
   },
   "bugs": {
     "url": "https://github.com/lubjs/lub/issues"
   },
   "dependencies": {
+    "co": "^4.6.0",
+    "is-type-of": "^1.2.1",
+    "lub-log": "^0.1.0",
     "yargs": "^15.0.2"
+  },
+  "devDependencies": {
+    "coffee": "^5.2.2",
+    "egg-bin": "^4.14.0"
   }
 }
