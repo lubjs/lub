@@ -21,6 +21,21 @@ function loadPluginConfig(pluginPath) {
   return pluginConfig;
 }
 
+/*
+  will return like:
+  {
+    'bar-dev': { clz: [Function: dev], config: undefined, task: [] },
+    coincidance: { clz: [Function: dance], config: undefined, task: [] },
+    start:
+      {
+        clz: [Function: start],
+        config: { env: 'build' },
+        task: [ [Object], [Object] ]
+      },
+    build:
+    { clz: [Function: build], config: { env: 'build' }, task: [] }
+  }
+ */
 function loadPlugin(pluginName, importerPath) {
   const cwd = process.cwd();
   let pluginPath = '';

@@ -10,6 +10,9 @@
   "author": "ahungrynoob <dxd_sjtu@outlook.com>",
   "homepage": "https://github.com/lubjs/lub",
   "license": "MIT",
+  "bin": {
+    "lub": "bin/lub.js"
+  },
   "main": "index.js",
   "files": [],
   "repository": {
@@ -29,6 +32,7 @@
   },
   "dependencies": {
     "import-fresh": "^3.2.1",
+    "lub-command": "^0.0.0",
     "lub-fs": "^0.0.0",
     "lub-log": "^0.1.0",
     "strip-json-comments": "^3.0.1"
