@@ -13,6 +13,7 @@ class MainCommand extends Command {
     this.commandInfo = loadPlugin();
     for (const commandName in this.commandInfo) {
       const Command = this.commandInfo[commandName].clz;
+      this.checkCommand(Command, commandName);
       this.yargs.command(commandName, Command.prototype.description || '');
     }
   }
@@ -58,7 +59,6 @@ class MainCommand extends Command {
    */
   async runTask(commandName, rawArgv) {
     const { clz, config, task } = this.commandInfo[commandName];
-    this.checkCommand(clz, commandName);
 
     const beforeTasks = task.filter(({ order }) => {
       return !order || order === 'before';
@@ -75,11 +75,11 @@ class MainCommand extends Command {
   }
 
   async run({ argv, rawArgv }) {
-    const [ commandName ] = argv._[0];
+    const [ commandName ] = argv._;
     if (!this.commandInfo[commandName]) {
-      log.error(`Can not find ${commandName} from your lub config file, please use \`lub --help
-          \` to check`);
-      return;
+      const error = new Error(`Can not find ${commandName} from your lub config file, please use \`lub --help
+        \` to check`);
+      throw error;
     }
     rawArgv.splice(rawArgv.indexOf(commandName), 1);
     await this.runTask(commandName, rawArgv);

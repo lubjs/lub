@@ -24,6 +24,10 @@
         "order": "before"
       },
       {
+        "command": " node scripts/error_script.js ",
+        "async": true
+      },
+      {
         "command": "node scripts/after_script.js",
         "async": true,
         "order": "after"
