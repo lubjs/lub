@@ -15,5 +15,9 @@ test:
 ci:
 	./scripts/ci.sh
 
+clean:
+	rm -rf packages/*/node_modules
+	rm -rf packages/*/coverage
+
 changelog:
 	lerna-changelog

@@ -4,6 +4,7 @@
     "install": "lerna bootstrap",
     "lint": "make lint",
     "test": "make test",
+    "clean": "make clean",
     "ci": "make ci",
     "changelog": "make changelog",
     "lint-staged": "lint-staged"

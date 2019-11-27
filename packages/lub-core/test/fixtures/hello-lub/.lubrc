@@ -1,0 +1,37 @@
+{
+  "plugins": [
+    "lub-plugin-foo",
+    "lub-plugin-bar"
+  ],
+  "lub-plugin-bar": {
+    "env": "build"
+  },
+  "alias": {
+    "lub-plugin-foo": {
+      "dev": "bar-dev"
+    }
+  },
+  "task": {
+    "start": [
+      {
+        "command": "node scripts/test_script.js",
+        "async": false,
+        "order": "before"
+      },
+      {
+        "command": " node scripts/async_script.js ",
+        "async": true,
+        "order": "before"
+      },
+      {
+        "command": " node scripts/error_script.js ",
+        "async": true
+      },
+      {
+        "command": "node scripts/after_script.js",
+        "async": true,
+        "order": "after"
+      }
+    ]
+  }
+}
