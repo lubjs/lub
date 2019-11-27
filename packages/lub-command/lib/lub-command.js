@@ -128,7 +128,7 @@ class LubCommand {
   }
 
   start() {
-    co(
+    return co(
       function* () {
         yield this[DISPATCH](this.config);
       }.bind(this)
