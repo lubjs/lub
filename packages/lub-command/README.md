@@ -33,7 +33,6 @@ class GitClone extends Command {
 
     // define your command's usage and description info
     this.usage = "lub clone <repository> [directory]";
-    this.description = "Clone a repository into a new directory";
 
     // pass your options to yargs
     this.options = {
@@ -45,6 +44,10 @@ class GitClone extends Command {
     };
   }
 
+  get description(){
+    return "Clone a repository into a new directory";
+  }
+
   // run method has to be defined to do your biz logic here
   // supports generator `* run()` and promise `async run()`
   // arguments context and config will be passed
@@ -52,7 +55,6 @@ class GitClone extends Command {
     if (config.quiet) {
       console.log("set quiet mode");
     }
-    console.log(this.description);
     const [repository, directory] = context.argv._;
     console.log(
       "git clone %s to %s with depth %d",
@@ -112,14 +114,13 @@ gitClone.start();
 - `showHelp()` - print usage message to console.
 - `options=` - a setter, shortcut for `yargs.options`
 - `usage=` - a setter, shortcut for `yargs.usage`
-- `description=` - a setter, shortcut for [yargs.command(cmd, desc, [module])](https://github.com/yargs/yargs/blob/99c2dc850e67c606644f8b0c0bca1a59c87dcbcd/docs/api.md#commandcmd-desc-module)
+- `version=` - a setter, set the version of you command
 
 **Properties:**
 
-- `description` - {String} a getter, only show this description when it's a sub command in help console
+- `description` - {String} a getter, shortcut for [yargs.command(cmd, desc, [module])](https://github.com/yargs/yargs/blob/99c2dc850e67c606644f8b0c0bca1a59c87dcbcd/docs/api.md#commandcmd-desc-module) only show this description when it's a sub command in help console
 - `yargs` - {Object} yargs instance for advanced custom usage
 - `helper` - {Object} helper instance exported from `const { helper } = require('lub-command');`
-- `options` - {Object} a setter, set yargs' options
 
 **tips:** `lub-command` will read version from your npm package's package.json
 
@@ -143,6 +144,20 @@ this.options = {
     choices: ['xs', 's', 'm', 'l', 'xl']
   },
 };
+```
+
+You can define version by set `this.version`
+
+```javascript
+this.version = 'v1.0.0';
+```
+
+You can define description by define `description` getter:
+
+```javascript
+get description(){
+  return 'this is description';
+}
 ```
 
 ### Helper

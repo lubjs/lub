@@ -24,8 +24,7 @@ describe('lub-command/test/index.test.js', () => {
     it('git-clone --version', done => {
       coffee
         .fork(myBin, [ '--version' ], { cwd })
-        // .debug()
-        .expect('stdout', /1\.0\.0/)
+        .expect('stdout', /v1\.0\.0/)
         .expect('code', 0)
         .end(done);
     });

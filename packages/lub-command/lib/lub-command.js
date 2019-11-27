@@ -5,9 +5,10 @@ const log = require('lub-log')('lub-command');
 const yargs = require('yargs');
 const helper = require('./helper');
 
-const DISPATCH = Symbol('LubCommand#dispatch');
+const DISPATCH = Symbol.for('LubCommand#dispatch');
 const DESCRIPTION = Symbol('LubCommand#description');
-const PARSE = Symbol('LubCommand#parse');
+const PARSE = Symbol.for('LubCommand#parse');
+const VERSION = Symbol('LubCommand#version');
 
 class LubCommand {
   /**
@@ -29,6 +30,22 @@ class LubCommand {
 
   showHelp() {
     this.yargs.showHelp();
+  }
+
+  /**
+   * set command's version
+   * @param {string} ver - version of your command
+   */
+  set version(ver) {
+    this[VERSION] = ver;
+  }
+
+  /**
+   * get command's version
+   * @return {string} ver - version of your command
+   */
+  get version() {
+    return this[VERSION];
   }
 
   /**
@@ -98,9 +115,9 @@ class LubCommand {
 
     // get parsed argument without handling helper and version
     const parsed = yield this[PARSE](this.rawArgv);
-    log.debug(parsed);
-    if (parsed.version) {
-      log.log(this.yargs.argv.version);
+
+    if (parsed.version && this.version) {
+      console.log(this.version);
       /* istanbul ignore next */
       return;
     }

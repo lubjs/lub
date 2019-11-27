@@ -7,6 +7,7 @@ class GitClone extends Command {
     super(rawArgv, config);
     this.usage = "clone <repository> [directory]";
     this.description = "Clone a repository into a new directory";
+    this.version = "v1.0.0";
     this.options = {
       depth: {
         type: "number",
