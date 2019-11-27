@@ -56,7 +56,7 @@ function loadPlugin(pluginName, importerPath) {
         const aliasCommand =
           (alias[current] && alias[current][command]) || command;
         prev[aliasCommand] = {
-          func: extendedPluginInfo[command].func,
+          clz: extendedPluginInfo[command].clz,
           config: extendedPluginInfo[command].fromEntry
             ? pluginConfig[current]
             : undefined,
@@ -72,7 +72,7 @@ function loadPlugin(pluginName, importerPath) {
     const entry = importFresh(pluginPath);
     for (const command in entry) {
       pluginInfo[command] = {
-        func: entry[command],
+        clz: entry[command],
         config: undefined,
         task: [],
         fromEntry: true,

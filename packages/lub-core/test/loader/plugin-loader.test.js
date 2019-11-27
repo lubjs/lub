@@ -18,6 +18,7 @@ describe('lub-core/test/loader/plugin-loader.test.js', () => {
     assert.ok(actual['bar-dev']);
     assert.ok(actual.coincidance);
     assert.ok(actual.start);
+    assert.ok(actual.start.clz);
     assert.ok(actual.build);
     assert.deepEqual(actual.start.config, { env: 'build' });
     assert.deepEqual(actual.build.config, { env: 'build' });
