@@ -5,6 +5,9 @@ const assert = require('assert');
 const log = require('lub-log')('lub-core');
 const loadPlugin = require('./loader/plugin-loader');
 
+const DISPATCH = Symbol.for('LubCommand#dispatch');
+const PARSE = Symbol.for('LubCommand#parse');
+
 class MainCommand extends Command {
   constructor(rawArgs) {
     super(rawArgs);
@@ -16,6 +19,40 @@ class MainCommand extends Command {
       this.checkCommand(Command, commandName);
       this.yargs.command(commandName, Command.prototype.description || '');
     }
+  }
+
+  * [DISPATCH]() {
+    // reset --help and --version by default
+    this.yargs
+      .help()
+      .version()
+      .wrap(120)
+      .alias('h', 'help')
+      .alias('v', 'version')
+      .group([ 'help', 'version' ], 'Global Options:');
+
+    // get parsed argument without handling helper and version
+    const parsed = yield this[PARSE](this.rawArgv);
+    if (parsed.version && !parsed._.length) {
+      log.log(this.yargs.argv.version);
+      /* istanbul ignore next */
+      return;
+    }
+
+    if (parsed.help && !parsed._.length) {
+      this.showHelp();
+      /* istanbul ignore next */
+      return;
+    }
+
+    const context = {
+      argv: parsed,
+      cwd: process.cwd(),
+      env: Object.assign({}, process.env),
+      rawArgv: this.rawArgv,
+    };
+
+    yield this.helper.callFn(this.run, [ context ], this);
   }
 
   /**
