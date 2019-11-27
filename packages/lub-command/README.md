@@ -149,6 +149,8 @@ this.options = {
 
 `lub-command` also provides some useful utils on `helper` when you develop your bin tool:
 
+- `forkNode(modulePath, args, opt)` - fork child process, wrap with promise and gracefull exit
+- `spawn(cmd, args, opt)` - spawn a new process, wrap with promise and gracefull exit
 - `* callFn(fn, args, thisArg)` - call fn, support gernerator / async / normal function return promise
 
 **how to require:**
