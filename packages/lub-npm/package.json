@@ -11,6 +11,7 @@
   "license": "MIT",
   "main": "index.js",
   "files": [
+    "index.js",
     "lib"
   ],
   "repository": {
@@ -26,7 +27,8 @@
     "url": "https://github.com/lubjs/lub/issues"
   },
   "dependencies": {
-    "lub-fs": "^0.0.0"
+    "lub-fs": "^0.0.0",
+    "universalify": "^0.1.2"
   },
   "devDependencies": {
     "egg-bin": "^4.14.0"
