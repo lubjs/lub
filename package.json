@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
+    "coffee": "^5.2.2",
     "egg-ci": "^1.13.1",
     "eslint": "^6.6.0",
     "eslint-config-egg": "^7.5.1",
@@ -29,6 +30,7 @@
     "lerna": "^3.18.4",
     "lerna-changelog": "^0.8.3",
     "lint-staged": "^9.4.3",
+    "mm": "^2.5.0",
     "power-assert": "^1.6.1"
   }
 }

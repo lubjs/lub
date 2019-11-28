@@ -31,7 +31,6 @@
     "url": "https://github.com/lubjs/lub/issues"
   },
   "devDependencies": {
-    "coffee": "^5.2.2",
     "egg-bin": "^4.14.0"
   },
   "dependencies": {
