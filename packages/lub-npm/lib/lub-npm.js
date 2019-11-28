@@ -113,8 +113,9 @@ exports.installSync = function(pkgs, option) {
     option = Object.assign({}, defaultInstallOption, pkgs);
     pkgs = [];
   } else {
+    pkgs = pkgs || [];
     pkgs = Array.isArray(pkgs) ? pkgs : [ pkgs ];
-    if (option.npmClient === 'yarn' && !option.registry) {
+    if (option && option.npmClient === 'yarn' && !option.registry) {
       option.registry = 'https://registry.yarnpkg.com';
     }
     option = Object.assign({}, defaultInstallOption, option);
@@ -129,7 +130,7 @@ exports.installSync = function(pkgs, option) {
       args.push('--production');
     }
     if (registry) {
-      args.push(`--registry=${args.registry}`);
+      args.push(`--registry=${registry}`);
     }
   } else {
     // npm install package or yarn add
@@ -157,6 +158,10 @@ exports.installSync = function(pkgs, option) {
 
     if (global && npmClient !== 'yarn') {
       args.push('-g');
+    }
+
+    if (registry) {
+      args.push(`--registry=${registry}`);
     }
   }
 
@@ -177,14 +182,17 @@ exports.installSync = function(pkgs, option) {
  */
 exports.install = u(function(pkgs, option, callback) {
   function spawnNpm(npmClient, args) {
-    helper.spawn(npmClient, args, { stdio: 'inherit' }).catch(error => {
-      if (error && error.code === 'ENOENT') {
-        log.error(
-          `Could not execute ${npmClient}, please check your package manager.`
-        );
-      }
-      callback(error);
-    });
+    helper
+      .spawn(npmClient, args, { stdio: 'inherit' })
+      .then(() => callback())
+      .catch(error => {
+        if (error && error.code === 'ENOENT') {
+          log.error(
+            `Could not execute ${npmClient}, please check your package manager.`
+          );
+        }
+        callback(error);
+      });
   }
 
   // work around for universalify.fromCallback
@@ -193,6 +201,11 @@ exports.install = u(function(pkgs, option, callback) {
     callback = pkgs;
     pkgs = [];
     option = {};
+  }
+
+  if (typeof option === 'function') {
+    callback = option;
+    option = pkgs;
   }
 
   if (pkgs && !Array.isArray(pkgs) && typeof pkgs !== 'string') {
@@ -206,7 +219,7 @@ exports.install = u(function(pkgs, option, callback) {
     pkgs = [];
   } else {
     pkgs = Array.isArray(pkgs) ? pkgs : [ pkgs ];
-    if (option.npmClient === 'yarn' && !option.registry) {
+    if (option && option.npmClient === 'yarn' && !option.registry) {
       option.registry = 'https://registry.yarnpkg.com';
     }
     option = Object.assign({}, defaultInstallOption, option);
@@ -221,7 +234,7 @@ exports.install = u(function(pkgs, option, callback) {
       args.push('--production');
     }
     if (registry) {
-      args.push(`--registry=${args.registry}`);
+      args.push(`--registry=${registry}`);
     }
   } else {
     // npm install package or yarn add
@@ -249,6 +262,10 @@ exports.install = u(function(pkgs, option, callback) {
 
     if (global && npmClient !== 'yarn') {
       args.push('-g');
+    }
+
+    if (registry) {
+      args.push(`--registry=${registry}`);
     }
   }
 
