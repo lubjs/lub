@@ -410,4 +410,142 @@ describe('lub-npm/test/index.test.js', () => {
       });
     });
   });
+
+  describe('uninstallSync', () => {
+    let commandString = '';
+    beforeEach(() => {
+      mm(spawn, 'sync', (command, args) => {
+        commandString = `${command} ${args.join(' ')}`;
+        return {};
+      });
+    });
+
+    afterEach(() => {
+      mm.restore();
+      commandString = '';
+    });
+
+    it('npm uninstall lub', () => {
+      lubNpm.uninstallSync('lub');
+      assert.equal(commandString, 'npm uninstall lub');
+    });
+
+    it('npm uninstall lub --save', () => {
+      lubNpm.uninstallSync('lub', {
+        save: true,
+      });
+      assert.equal(commandString, 'npm uninstall lub --save');
+    });
+
+    it('npm uninstall lub lub-npm --save-dev', () => {
+      lubNpm.uninstallSync([ 'lub', 'lub-npm' ], {
+        dev: true,
+      });
+      assert.equal(commandString, 'npm uninstall lub lub-npm --save-dev');
+    });
+
+    it('npm uninstall lub -g', () => {
+      lubNpm.uninstallSync('lub', {
+        save: true,
+        dev: true,
+        global: true,
+      });
+      assert.equal(commandString, 'npm uninstall lub -g');
+    });
+
+    it('yarn remove lub', () => {
+      lubNpm.uninstallSync('lub', {
+        save: true,
+        npmClient: 'yarn',
+      });
+      assert.equal(commandString, 'yarn remove lub');
+    });
+
+    it('yarn remove lub lub-npm', () => {
+      lubNpm.uninstallSync([ 'lub', 'lub-npm' ], {
+        dev: true,
+        npmClient: 'yarn',
+      });
+      assert.equal(commandString, 'yarn remove lub lub-npm');
+    });
+
+    it('yarn global remove lub', () => {
+      lubNpm.uninstallSync('lub', {
+        save: true,
+        dev: true,
+        global: true,
+        npmClient: 'yarn',
+      });
+      assert.equal(commandString, 'yarn global remove lub');
+    });
+
+    it('should log error', () => {
+      lubNpm.uninstallSync({});
+    });
+  });
+
+  describe('uninstall', () => {
+    let commandString = '';
+    beforeEach(() => {
+      mm(lubCommand.helper, 'spawn', (command, args) => {
+        commandString = `${command} ${args.join(' ')}`;
+        return new Promise(resolve => {
+          resolve('ok');
+        });
+      });
+    });
+
+    afterEach(() => {
+      mm.restore();
+      commandString = '';
+    });
+
+    it('npm uninstall lub', async () => {
+      await lubNpm.uninstall('lub');
+      assert.equal(commandString, 'npm uninstall lub');
+    });
+
+    it('npm uninstall lub --save', async () => {
+      await lubNpm.uninstall('lub', {
+        save: true,
+      });
+      assert.equal(commandString, 'npm uninstall lub --save');
+    });
+
+    it('npm uninstall lub lub-npm -g', async () => {
+      await lubNpm.uninstall([ 'lub', 'lub-npm' ], {
+        save: true,
+        global: true,
+      });
+      assert.equal(commandString, 'npm uninstall lub lub-npm -g');
+    });
+
+    it('tnpm uninstall lub --save-dev', async () => {
+      await lubNpm.uninstall('lub', {
+        npmClient: 'tnpm',
+        save: true,
+        dev: true,
+      });
+      assert.equal(commandString, 'tnpm uninstall lub --save-dev');
+    });
+
+    it('yarn remove lub', async () => {
+      await lubNpm.uninstall('lub', {
+        npmClient: 'yarn',
+      });
+      assert.equal(commandString, 'yarn remove lub');
+    });
+
+    it('yarn global remove lub lub-npm', async () => {
+      await lubNpm.uninstall([ 'lub', 'lub-npm' ], {
+        npmClient: 'yarn',
+        global: true,
+      });
+      assert.equal(commandString, 'yarn global remove lub lub-npm');
+    });
+
+    it('should log error', () => {
+      lubNpm.uninstall();
+    });
+  });
 });

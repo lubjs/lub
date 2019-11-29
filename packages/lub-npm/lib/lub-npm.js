@@ -1,12 +1,17 @@
 'use strict';
 
 const fs = require('lub-fs');
-const { helper } = require('lub-command');
-const log = require('lub-log')('lub-npm');
-const spawn = require('cross-spawn');
 const urllib = require('urllib');
 const path = require('path');
+const log = require('lub-log')('lub-npm');
 const u = require('universalify').fromCallback;
+const {
+  spawnNpm,
+  spawnNpmSync,
+  defaultInstallOption,
+  defaultLatestConfig,
+  defaultUninstallOption,
+} = require('./utils');
 
 /**
  * Find the closest package.json file, starting at process.cwd (by default),
@@ -73,14 +78,6 @@ function findPackageJson(startDir, callback) {
 
 exports.findPackageJson = u(findPackageJson);
 
-const defaultInstallOption = {
-  save: true,
-  dev: false,
-  global: false,
-  production: false,
-  registry: 'https://registry.npmjs.org',
-  npmClient: 'npm',
-};
 /**
  * install packages or dependencies from pkg.json
  * @param {string | array} [pkgs] - packages to install
@@ -93,17 +90,6 @@ const defaultInstallOption = {
  * @param {string} option.npmClient - support npm | yarn | or your custom npm client like cnpm, tnpm
  */
 exports.installSync = function(pkgs, option) {
-  function spawnNpm(npmClient, args) {
-    const npmProcess = spawn.sync(npmClient, args, { stdio: 'inherit' });
-    const error = npmProcess.error;
-    if (error && error.code === 'ENOENT') {
-      log.error(
-        `Could not execute ${npmClient}, please check your package manager.`
-      );
-      throw error;
-    }
-  }
-
   if (pkgs && !Array.isArray(pkgs) && typeof pkgs !== 'string') {
     // only pass option in the first place;
 
@@ -166,7 +152,7 @@ exports.installSync = function(pkgs, option) {
     }
   }
 
-  spawnNpm(npmClient, args);
+  spawnNpmSync(npmClient, args);
 };
 
 /**
@@ -182,20 +168,6 @@ exports.installSync = function(pkgs, option) {
  * @param {function} callback - callback with error argv
  */
 exports.install = u(function(pkgs, option, callback) {
-  function spawnNpm(npmClient, args) {
-    helper
-      .spawn(npmClient, args, { stdio: 'inherit' })
-      .then(() => callback())
-      .catch(error => {
-        if (error && error.code === 'ENOENT') {
-          log.error(
-            `Could not execute ${npmClient}, please check your package manager.`
-          );
-        }
-        callback(error);
-      });
-  }
-
   // work around for universalify.fromCallback
   // https://github.com/RyanZim/universalify/issues/10
   if (typeof pkgs === 'function') {
@@ -270,13 +242,9 @@ exports.install = u(function(pkgs, option, callback) {
     }
   }
 
-  spawnNpm(npmClient, args);
+  spawnNpm(npmClient, args, callback);
 });
 
-const defaultLatestConfig = {
-  registry: 'https://registry.npmjs.org',
-  version: 'latest',
-};
 /**
  * get the package info on npm remote (support promise and callback)
  * @param {string} name - package's name
@@ -309,4 +277,102 @@ exports.latest = u(function(name, option, callback) {
     }
     callback(null, data);
   });
+});
+
+/**
+ * uninstall packages or dependencies from pkg.json
+ * @param {string | array} [pkgs] - packages to uninstall
+ * @param {Object} [option] - option for uninstall
+ * @param {boolean} option.save  - save to pkg[dependencies]
+ * @param {boolean} option.dev  - save to pkg[devDependencies]
+ * @param {boolean} option.global - uninstall to global scope (npm uninstall xx -g)
+ * @param {string} option.npmClient - support npm | yarn | or your custom npm client like cnpm, tnpm
+ */
+exports.uninstallSync = function(pkgs, option) {
+  if (
+    !pkgs ||
+    (typeof pkgs !== 'string' && !Array.isArray(pkgs)) ||
+    !pkgs.length
+  ) {
+    log.error('pkgs has to be array or string and truthy');
+    return;
+  }
+  pkgs = Array.isArray(pkgs) ? pkgs : [ pkgs ];
+  option = Object.assign({}, defaultUninstallOption, option);
+  const { npmClient, global, save, dev } = option;
+  let args = [];
+  if (npmClient === 'yarn') {
+    if (global) {
+      args = [ 'global', 'remove', ...pkgs ];
+    } else {
+      args = [ 'remove', ...pkgs ];
+    }
+  } else {
+    args = [ 'uninstall', ...pkgs ];
+    if (save && !dev && !global) {
+      args.push('--save');
+    }
+    if (dev && !global) {
+      args.push('--save-dev');
+    }
+    if (global) {
+      args.push('-g');
+    }
+  }
+
+  spawnNpmSync(npmClient, args);
+};
+
+/**
+ * uninstall packages or dependencies from pkg.json
+ * @param {string | array} [pkgs] - packages to uninstall
+ * @param {Object} [option] - option for uninstall
+ * @param {boolean} option.save  - save to pkg[dependencies]
+ * @param {boolean} option.dev  - save to pkg[devDependencies]
+ * @param {boolean} option.global - uninstall to global scope (npm uninstall xx -g)
+ * @param {string} option.npmClient - support npm | yarn | or your custom npm client like cnpm, tnpm
+ *@param {function} callback - callback with (error)
+ */
+exports.uninstall = u(function(pkgs, option, callback) {
+  if (typeof pkgs === 'function') {
+    callback = pkgs;
+    pkgs = [];
+  }
+  if (typeof option === 'function') {
+    callback = option;
+    option = {};
+  }
+  if (
+    !pkgs ||
+    (typeof pkgs !== 'string' && !Array.isArray(pkgs)) ||
+    !pkgs.length
+  ) {
+    log.error('pkgs has to be array or string and truthy');
+    callback();
+    return;
+  }
+  pkgs = Array.isArray(pkgs) ? pkgs : [ pkgs ];
+  option = Object.assign({}, defaultUninstallOption, option);
+  const { npmClient, global, save, dev } = option;
+  let args = [];
+  if (npmClient === 'yarn') {
+    if (global) {
+      args = [ 'global', 'remove', ...pkgs ];
+    } else {
+      args = [ 'remove', ...pkgs ];
+    }
+  } else {
+    args = [ 'uninstall', ...pkgs ];
+    if (save && !dev && !global) {
+      args.push('--save');
+    }
+    if (dev && !global) {
+      args.push('--save-dev');
+    }
+    if (global) {
+      args.push('-g');
+    }
+  }
+
+  spawnNpm(npmClient, args, callback);
 });
