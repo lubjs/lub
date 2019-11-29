@@ -1,21 +1,17 @@
 {
-  "name": "lub",
-  "version": "0.1.0",
-  "description": "A frontend engineering tool.",
+  "name": "lub-npm",
+  "version": "0.0.0",
+  "description": "npm package manager for lubjs (support yarn)",
   "keywords": [
-    "frontend",
-    "boilerplate",
-    "tool"
+    "lubjs",
+    "lub-npm"
   ],
   "author": "ahungrynoob <dxd_sjtu@outlook.com>",
-  "homepage": "https://github.com/lubjs/lub",
+  "homepage": "https://github.com/lubjs/lub#readme",
   "license": "MIT",
-  "bin": {
-    "lub": "bin/lub.js"
-  },
   "main": "index.js",
   "files": [
-    "bin",
+    "index.js",
     "lib"
   ],
   "repository": {
@@ -30,14 +26,16 @@
   "bugs": {
     "url": "https://github.com/lubjs/lub/issues"
   },
-  "devDependencies": {
-    "egg-bin": "^4.14.0"
-  },
   "dependencies": {
-    "import-fresh": "^3.2.1",
+    "cross-spawn": "^7.0.1",
     "lub-command": "^0.0.1",
     "lub-fs": "^0.0.0",
     "lub-log": "^0.1.0",
-    "strip-json-comments": "^3.0.1"
+    "npm": "^6.13.1",
+    "universalify": "^0.1.2",
+    "yarn": "^1.19.2"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.14.0"
   }
 }

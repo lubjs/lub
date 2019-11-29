@@ -33,7 +33,6 @@
     "yargs": "^15.0.2"
   },
   "devDependencies": {
-    "coffee": "^5.2.2",
     "egg-bin": "^4.14.0"
   }
 }

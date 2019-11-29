@@ -34,7 +34,6 @@
     "universalify": "^0.1.2"
   },
   "devDependencies": {
-    "egg-bin": "^4.14.0",
-    "mm": "^2.5.0"
+    "egg-bin": "^4.14.0"
   }
 }
