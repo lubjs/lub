@@ -23,16 +23,16 @@ Also Async/Await will throw an error if one occurs.
 
 ### Sync
 
-- [findPackageJsonSync](#findPackageJsonSync)
-- [installSync](#installSync)
-- [uninstallSync](#uninstallSync)
+- [findPackageJsonSync](#findpackagejsonsyncstartdir--string)
+- [installSync](#installsyncpkgsoption)
+- [uninstallSync](#uninstallsyncpkgsoption)
 
 ### Async
 
-- [findPackageJson](#findPackageJson)
-- [install](#install)
-- [uninstall](#uninstall)
-- [latest](#latest)
+- [findPackageJson](#findpackagejsonstartdircallback)
+- [install](#installpkgsoptioncallback)
+- [uninstall](#uninstallpkgsoptioncallback)
+- [latest](#latestpkgoption)
 
 ## API
 
