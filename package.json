@@ -32,5 +32,8 @@
     "lint-staged": "^9.4.3",
     "mm": "^2.5.0",
     "power-assert": "^1.6.1"
+  },
+  "dependencies": {
+    "urllib": "^2.34.1"
   }
 }

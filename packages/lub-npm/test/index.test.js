@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('lub-fs');
 const assert = require('power-assert');
+const urllib = require('urllib');
 const mm = require('mm');
 const spawn = require('cross-spawn');
 const lubCommand = require('lub-command');
@@ -363,6 +364,48 @@ describe('lub-npm/test/index.test.js', () => {
         });
       });
       lubNpm.install().catch(() => {
+        done();
+      });
+    });
+  });
+
+  describe('latest', () => {
+    afterEach(mm.restore);
+
+    it('should return correct package info', async () => {
+      mm(urllib, 'request', (_, __, callback) => {
+        callback(null, { name: 'lub' });
+      });
+      const packageInfo = await lubNpm.latest('react');
+      assert.equal(packageInfo.name, 'lub');
+    });
+
+    it('should throw when empty name', done => {
+      mm(urllib, 'request', (_, __, callback) => {
+        callback(null, { name: 'lub' });
+      });
+      lubNpm.latest('', e => {
+        assert.ok(e instanceof Error);
+        done();
+      });
+    });
+
+    it('should return correct data', done => {
+      mm(urllib, 'request', (_, __, callback) => {
+        callback(null, { name: 'lub' });
+      });
+      lubNpm.latest('lub', { registry: 'https://foo.com/' }, (_, data) => {
+        assert.equal(data.name, 'lub');
+        done();
+      });
+    });
+
+    it('should callback error', done => {
+      mm(urllib, 'request', (_, __, callback) => {
+        callback(new Error('this is error'));
+      });
+      lubNpm.latest('lub', { registry: 'https://foo.com/' }, err => {
+        assert.ok(err instanceof Error);
         done();
       });
     });

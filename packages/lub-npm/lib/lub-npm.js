@@ -4,6 +4,7 @@ const fs = require('lub-fs');
 const { helper } = require('lub-command');
 const log = require('lub-log')('lub-npm');
 const spawn = require('cross-spawn');
+const urllib = require('urllib');
 const path = require('path');
 const u = require('universalify').fromCallback;
 
@@ -270,4 +271,42 @@ exports.install = u(function(pkgs, option, callback) {
   }
 
   spawnNpm(npmClient, args);
+});
+
+const defaultLatestConfig = {
+  registry: 'https://registry.npmjs.org',
+  version: 'latest',
+};
+/**
+ * get the package info on npm remote (support promise and callback)
+ * @param {string} name - package's name
+ * @param {Object} [option] - option for latest
+ * @param {string} option.registry - registry of your npm client
+ * @param {string} option.version - version of your npm package
+ * @param {function} callback - callback with (error,info<json>)
+ */
+exports.latest = u(function(name, option, callback) {
+  if (typeof option === 'function') {
+    callback = option;
+    option = {};
+  }
+  if (!name || typeof name !== 'string') {
+    callback(
+      new Error(
+        `typeof name should be string and should not be empty, but latest function received type: ${typeof name}`
+      )
+    );
+    return;
+  }
+  option = Object.assign({}, defaultLatestConfig, option);
+  if (option.registry[option.registry.length - 1] !== '/') {
+    option.registry = `${option.registry}/`;
+  }
+  const url = `${option.registry}${encodeURIComponent(name)}/${option.version}`;
+  urllib.request(url, { dataType: 'json' }, function(err, data) {
+    if (err) {
+      callback(err);
+    }
+    callback(null, data);
+  });
 });
