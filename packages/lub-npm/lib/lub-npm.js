@@ -280,8 +280,8 @@ exports.latest = u(function(name, option, callback) {
 });
 
 /**
- * uninstall packages or dependencies from pkg.json
- * @param {string | array} [pkgs] - packages to uninstall
+ * uninstall specific packages
+ * @param {string | array} pkgs - packages to uninstall
  * @param {Object} [option] - option for uninstall
  * @param {boolean} option.save  - save to pkg[dependencies]
  * @param {boolean} option.dev  - save to pkg[devDependencies]
@@ -325,7 +325,7 @@ exports.uninstallSync = function(pkgs, option) {
 
 /**
  * uninstall packages or dependencies from pkg.json
- * @param {string | array} [pkgs] - packages to uninstall
+ * @param {string | array} pkgs - packages to uninstall
  * @param {Object} [option] - option for uninstall
  * @param {boolean} option.save  - save to pkg[dependencies]
  * @param {boolean} option.dev  - save to pkg[devDependencies]

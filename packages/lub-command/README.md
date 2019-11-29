@@ -81,7 +81,7 @@ module.exports = {
 
 ### Usage for independent module
 
-The implementation of subcommand class is the of [For lub plugin developer](#For-lub-plugin-developer).
+The implementation of subcommand class is the of [For lub plugin developer](#usage-for-developing-lub-plugin).
 
 But you need to run this subcommand by your self.
 ```javascript
