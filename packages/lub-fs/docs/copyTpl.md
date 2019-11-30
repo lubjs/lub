@@ -1,4 +1,4 @@
-# copyTplSync(options, [, callback])
+# copyTpl(options, [, callback])
 
 Copy a file or directory and replace the data or string in it (based on [underscore's template](https://underscorejs.org/#template)). The directory can have contents. Like cp -r.
 

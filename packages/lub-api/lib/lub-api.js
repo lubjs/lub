@@ -1,7 +1,13 @@
 'use strict';
 
-module.exports = lubApi;
+const command = require('lub-command');
+const fs = require('lub-fs');
+const log = require('lub-log');
+const npm = require('lub-npm');
 
-function lubApi() {
-  // TODO
-}
+module.exports = {
+  command,
+  fs,
+  log,
+  npm,
+};
