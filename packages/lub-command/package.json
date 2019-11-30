@@ -1,6 +1,6 @@
 {
   "name": "lub-command",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A command base class to help create plugin",
   "keywords": [
     "lubjs",
@@ -29,7 +29,7 @@
   "dependencies": {
     "co": "^4.6.0",
     "is-type-of": "^1.2.1",
-    "lub-log": "^0.1.0",
+    "lub-log": "^0.1.1",
     "yargs": "^15.0.2"
   },
   "devDependencies": {

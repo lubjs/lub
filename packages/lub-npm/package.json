@@ -1,6 +1,6 @@
 {
   "name": "lub-npm",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "npm package manager for lubjs (support yarn)",
   "keywords": [
     "lubjs",
@@ -28,9 +28,9 @@
   },
   "dependencies": {
     "cross-spawn": "^7.0.1",
-    "lub-command": "^0.0.1",
-    "lub-fs": "^0.0.0",
-    "lub-log": "^0.1.0",
+    "lub-command": "^0.1.1",
+    "lub-fs": "^0.1.1",
+    "lub-log": "^0.1.1",
     "npm": "^6.13.1",
     "universalify": "^0.1.2",
     "yarn": "^1.19.2"

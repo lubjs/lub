@@ -1,6 +1,6 @@
 {
   "name": "lub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A frontend engineering tool.",
   "keywords": [
     "frontend",
@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "import-fresh": "^3.2.1",
-    "lub-command": "^0.0.1",
-    "lub-fs": "^0.0.0",
-    "lub-log": "^0.1.0",
+    "lub-command": "^0.1.1",
+    "lub-fs": "^0.1.1",
+    "lub-log": "^0.1.1",
     "strip-json-comments": "^3.0.1"
   }
 }

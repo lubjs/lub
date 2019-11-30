@@ -1,6 +1,6 @@
 {
   "name": "lub-api",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "A api collection for lubjs",
   "keywords": [
     "lub-api",
@@ -30,9 +30,9 @@
     "egg-bin": "^4.14.0"
   },
   "dependencies": {
-    "lub-command": "^0.0.1",
-    "lub-fs": "^0.0.0",
-    "lub-log": "^0.1.0",
-    "lub-npm": "^0.0.0"
+    "lub-command": "^0.1.1",
+    "lub-fs": "^0.1.1",
+    "lub-log": "^0.1.1",
+    "lub-npm": "^0.1.1"
   }
 }
