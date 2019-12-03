@@ -35,7 +35,7 @@ describe('lub-core/test/main.test.js', () => {
   it('lub --help', done => {
     coffee
       .fork(lubBin, [ '--help' ], { cwd: fixturePath })
-      .expect('stdout', /Usage: lfx <subCommand>/)
+      .expect('stdout', /Usage: lub <subCommand>/)
       .expect('stdout', /Commands:/)
       .expect('stdout', /lub\.js bar-dev.*dev command/)
       .expect('stdout', /lub\.js coincidance.*concidance command/)
@@ -47,7 +47,7 @@ describe('lub-core/test/main.test.js', () => {
   it('lub -h', done => {
     coffee
       .fork(lubBin, [ '-h' ], { cwd: fixturePath })
-      .expect('stdout', /Usage: lfx <subCommand>/)
+      .expect('stdout', /Usage: lub <subCommand>/)
       .expect('stdout', /Commands:/)
       .expect('stdout', /lub\.js bar-dev.*dev command/)
       .expect('stdout', /lub\.js coincidance.*concidance command/)
@@ -77,6 +77,22 @@ describe('lub-core/test/main.test.js', () => {
     coffee
       .fork(lubBin, [ 'notfound' ], { cwd: fixturePath })
       .expect('stdout', /.*Can not find notfound from your lub config file.*/)
+      .expect('code', 1)
+      .end(done);
+  });
+
+  it('should throw when not found lub-command package', done => {
+    coffee
+      .fork(lubBin, [ 'start' ], { cwd: '/' })
+      .debug()
+      .expect(
+        'stdout',
+        /can not find lub-command module in current project, please install it first/
+      )
+      // .expect('stdout', /start config\[env] is build/)
+      // .expect('stdout', /this is after test/)
+      // .expect('stderr', /Error: this is error/)
+      // .expect('stdout', /this is async test/)
       .expect('code', 1)
       .end(done);
   });
