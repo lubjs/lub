@@ -59,7 +59,7 @@ describe('lub-core/test/main.test.js', () => {
 
   it('lub -v', done => {
     coffee
-      .fork(lubBin, [ '-v' ], { cwd: fixturePath })
+      .fork(lubBin, [ '-v' ], { cwd: '/' })
       .expect('stdout', /\d.\d.\d/)
       .expect('code', 0)
       .end(done);
@@ -77,22 +77,6 @@ describe('lub-core/test/main.test.js', () => {
     coffee
       .fork(lubBin, [ 'notfound' ], { cwd: fixturePath })
       .expect('stdout', /.*Can not find notfound from your lub config file.*/)
-      .expect('code', 1)
-      .end(done);
-  });
-
-  it('should throw when not found lub-command package', done => {
-    coffee
-      .fork(lubBin, [ 'start' ], { cwd: '/' })
-      .debug()
-      .expect(
-        'stdout',
-        /can not find lub-command module in current project, please install it first/
-      )
-      // .expect('stdout', /start config\[env] is build/)
-      // .expect('stdout', /this is after test/)
-      // .expect('stderr', /Error: this is error/)
-      // .expect('stdout', /this is async test/)
       .expect('code', 1)
       .end(done);
   });

@@ -118,10 +118,10 @@ class LubCommand {
 
     if (parsed.version && this.version) {
       console.log(this.version);
-      /* istanbul ignore next */
-      return;
+      process.exit(0);
     }
     if (parsed.help) {
+      // in showHelp yargs will exit(0);
       this.showHelp();
       /* istanbul ignore next */
       return;
