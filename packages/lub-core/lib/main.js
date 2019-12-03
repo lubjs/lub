@@ -1,17 +1,34 @@
 'use strict';
 
-const Command = require('lub-command');
 const assert = require('assert');
 const log = require('lub-log')('lub-core');
+const path = require('path');
 const loadPlugin = require('./loader/plugin-loader');
-
+const resolver = require('./shared/relative-module-resolver');
 const DISPATCH = Symbol.for('LubCommand#dispatch');
 const PARSE = Symbol.for('LubCommand#parse');
+
+const cwd = process.cwd();
+
+let Command = null;
+
+try {
+  const LocalLubCommandModulePath = resolver.resolve(
+    'lub-command',
+    path.join(cwd, '__placeholder__.js')
+  );
+  Command = require(LocalLubCommandModulePath);
+} catch (e) {
+  log.error(
+    'can not find lub-command module in current project, please install it first'
+  );
+  process.exit(1);
+}
 
 class MainCommand extends Command {
   constructor(rawArgs) {
     super(rawArgs);
-    this.usage = 'Usage: lfx <subCommand>';
+    this.usage = 'Usage: lub <subCommand>';
     // init command from lub-plugins;
     this.commandInfo = loadPlugin();
     for (const commandName in this.commandInfo) {
