@@ -24,7 +24,7 @@ The name of `lubjs` comes from [Lu Ban](https://en.wikipedia.org/wiki/Lu_Ban), a
 ## Features
 - **simple config , out of the box** - by creating `.lubrc`, `.lubrc.json` or `.lubrc.js` in your project and declare plugins, you can use others' cli command as well as boilerplate
 - **OO Design, develop your own plugin quickly** - Define your command class by appointment and export it, you just make it.
-- **abundant async/async function utils** - `lubjs` provides you with many useful utils which you can use when developing your plugins.
+- **abundant async/async function utils** - `lubjs` provides you with many [useful utils](https://github.com/lubjs/lub/tree/master/packages/lub-api) which you can use when developing your plugins.
 - **integratable and extendable** - by declare multiple plugins you just integrate these commands if these plugins alse requires other plugins in config file, the project also own them.
 - **support promise (async/await) and generator**
 
@@ -53,7 +53,7 @@ The order `lubjs` read from your project is: `.lubrc.js` > `.lubrc.json` > `.lub
 
 A typical `lubrc` config looks like this:
 
-```json
+```javascript
 // .lubrc or .lubrc.json
 {
   "plugins": [
@@ -171,7 +171,7 @@ And a real world example: [lub-plugin-publish](https://github.com/lubjs/lub-plug
 
 ## PR Welcome
 
-If your have some wondeful plugins and utils, pull requests are will welcomed in this [github group](https://github.com/lubjs).
+If your have some wondeful plugins and utils, pull requests are welcomed in this [github group](https://github.com/lubjs).
 
 
 ## License
