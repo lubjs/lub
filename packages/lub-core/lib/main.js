@@ -3,9 +3,9 @@
 const assert = require('assert');
 const log = require('lub-log')('lub-core');
 const Command = require('lub-command');
-const path = require('path');
 const loadPlugin = require('./loader/plugin-loader');
-const resolver = require('./shared/relative-module-resolver');
+const getLocalLubCommandClass = require('./shared/getLocalLubCommandClass');
+
 const DISPATCH = Symbol.for('LubCommand#dispatch');
 const PARSE = Symbol.for('LubCommand#parse');
 
@@ -85,24 +85,13 @@ class MainCommand extends Command {
    */
   checkCommand(clz, commandName) {
     if (!this.LocalCommand) {
-      try {
-        const LocalLubCommandModulePath = resolver.resolve(
-          'lub-command',
-          path.join(process.cwd(), '__placeholder__.js')
-        );
-        this.LocalCommand = require(LocalLubCommandModulePath);
-      } catch (e /* istanbul ignore next */) {
-        log.error(
-          'can not find lub-command module in current project, please install it first'
-        );
-        process.exit(1);
-      }
+      this.LocalCommand = getLocalLubCommandClass();
     }
 
     const LocalCommand = this.LocalCommand;
     assert(
       clz.prototype instanceof LocalCommand,
-      `${commandName} class should be sub class of lub-command`
+      `${commandName} class should be sub class of lub-command, please check the version of lub and lub plugin remain the same.`
     );
   }
 

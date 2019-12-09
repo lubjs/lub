@@ -4,9 +4,18 @@ const log = require('lub-log')('lub-core:plugin-loader');
 const importFresh = require('import-fresh');
 const path = require('path');
 const resolver = require('../shared/relative-module-resolver');
+const InitCommand = require('../buildInCommand/InitCommand');
 const loadConfig = require('./config-loader');
 
 const CONFIG_NAME_PREFIX = '.lubrc';
+
+const defaultPluginInfo = {
+  init: {
+    clz: InitCommand,
+    config: undefined,
+    task: [],
+  },
+};
 
 function loadPluginConfig(pluginPath) {
   const pluginConfigJS = path.join(pluginPath, `${CONFIG_NAME_PREFIX}.js`);
@@ -38,8 +47,10 @@ function loadPluginConfig(pluginPath) {
  */
 function loadPlugin(pluginName, importerPath) {
   const cwd = process.cwd();
+  const isUpperProjectScene = !pluginName;
   let pluginPath = '';
-  if (!pluginName) {
+
+  if (isUpperProjectScene) {
     // in a upper application scene
     pluginPath = cwd;
   } else {
@@ -56,7 +67,7 @@ function loadPlugin(pluginName, importerPath) {
     }
   }
 
-  let pluginInfo = {};
+  let pluginInfo = isUpperProjectScene ? defaultPluginInfo : {};
 
   const pluginConfig = loadPluginConfig(pluginPath);
 
@@ -77,7 +88,7 @@ function loadPlugin(pluginName, importerPath) {
         };
       }
       return prev;
-    }, {});
+    }, pluginInfo);
   }
 
   if (pluginName) {
