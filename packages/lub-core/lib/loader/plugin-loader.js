@@ -72,9 +72,7 @@ function loadPlugin(pluginName, importerPath) {
           (alias[current] && alias[current][command]) || command;
         prev[aliasCommand] = {
           clz: extendedPluginInfo[command].clz,
-          config: extendedPluginInfo[command].fromEntry
-            ? pluginConfig[current]
-            : undefined,
+          config: pluginConfig[current],
           task: task[command] || [],
         };
       }
@@ -90,7 +88,6 @@ function loadPlugin(pluginName, importerPath) {
         clz: entry[command],
         config: undefined,
         task: [],
-        fromEntry: true,
       };
     }
   }
