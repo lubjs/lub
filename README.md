@@ -37,7 +37,8 @@ npm install lub --save
 npx lub <subcommand>
 ```
 
-Or
+or
+
 ```bash
 npm install lub -g
 
