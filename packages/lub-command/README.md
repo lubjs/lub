@@ -1,5 +1,20 @@
 # lub-command
 
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url] 
+[![Test coverage][codecov-image]][codecov-url] 
+[![npm download][download-image]][download-url]
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
+[npm-image]: https://img.shields.io/npm/v/lub-command.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/lub-command
+[travis-image]: https://img.shields.io/travis/lubjs/lub.svg?style=flat-square
+[travis-url]: https://travis-ci.org/lubjs/lub
+[codecov-image]: https://codecov.io/gh/lubjs/lub/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/lubjs/lub
+[download-image]: https://img.shields.io/npm/dm/lub-command.svg?style=flat-square
+[download-url]: https://npmjs.org/package/lub-command
+
 A base command class to help develop your lub-plugin based on [yargs](https://github.com/yargs/yargs).
 
 It's quit convenient to define your bin's version, help info, description and option description by extending this command class.
