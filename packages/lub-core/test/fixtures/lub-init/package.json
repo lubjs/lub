@@ -1,0 +1,7 @@
+{
+  "name": "lub-init",
+  "version": "0.0.1",
+  "devDependencies": {
+    "lub-plugin-foo": "^1.0.0"
+  }
+}

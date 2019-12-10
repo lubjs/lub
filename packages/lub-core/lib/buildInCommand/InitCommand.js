@@ -3,11 +3,10 @@
 const inquirer = require('inquirer');
 const fs = require('lub-fs');
 const lubNpm = require('lub-npm');
-const loadPlugin = require('../loader/plugin-loader');
-const getLocalLubCommandClass = require('../shared/getLocalLubCommandClass');
+const LubCommand = require('lub-command');
 const log = require('lub-log')('lub-core');
 
-const LubCommand = getLocalLubCommandClass();
+const loadPlugin = require('../loader/plugin-loader');
 
 class InitCommand extends LubCommand {
   constructor(rawArgv, config) {
@@ -39,6 +38,7 @@ class InitCommand extends LubCommand {
 
   async checkEmptyDir(pluginName) {
     const fileDirs = await fs.readdir(this.cwd);
+    /* istanbul ignore next */
     if (!fileDirs) {
       return true;
     }
@@ -54,9 +54,16 @@ class InitCommand extends LubCommand {
 
   async run({ argv, rawArgv }) {
     const pluginName = argv._[0];
+
+    if (!pluginName) {
+      this.showHelp();
+      process.exit(0);
+    }
+
     const { registry, client: npmClient } = argv;
     const checkEmptyDir = await this.checkEmptyDir(pluginName);
 
+    /* istanbul ignore next */
     if (!checkEmptyDir) {
       process.exit(0);
       return;
@@ -71,13 +78,14 @@ class InitCommand extends LubCommand {
     const initClz = loadPlugin(pluginName).init;
 
     if (!initClz) {
-      log.error(`can not find init command on ${pluginName}`);
+      log.error(`can not find init command in ${pluginName}`);
       process.exit(1);
     }
 
     const { clz } = initClz;
     rawArgv.splice(rawArgv.indexOf(pluginName), 1);
     await new clz(rawArgv).start();
+    log.success(`Init ${pluginName} successfully!`);
   }
 }
 
