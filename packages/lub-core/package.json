@@ -35,9 +35,11 @@
   },
   "dependencies": {
     "import-fresh": "^3.2.1",
+    "inquirer": "^7.0.0",
     "lub-command": "^0.1.3",
     "lub-fs": "^0.1.1",
     "lub-log": "^0.1.1",
+    "lub-npm": "^0.1.3",
     "strip-json-comments": "^3.0.1"
   }
 }

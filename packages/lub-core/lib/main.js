@@ -3,9 +3,7 @@
 const assert = require('assert');
 const log = require('lub-log')('lub-core');
 const Command = require('lub-command');
-const path = require('path');
-const loadPlugin = require('./loader/plugin-loader');
-const resolver = require('./shared/relative-module-resolver');
+
 const DISPATCH = Symbol.for('LubCommand#dispatch');
 const PARSE = Symbol.for('LubCommand#parse');
 
@@ -13,7 +11,11 @@ class MainCommand extends Command {
   constructor(rawArgs) {
     super(rawArgs);
     this.usage = 'Usage: lub <subCommand>';
-    // init command from lub-plugins;
+  }
+
+  loadCommandInfo() {
+    // load command from lub-plugins;
+    const loadPlugin = require('./loader/plugin-loader');
     this.commandInfo = loadPlugin();
     for (const commandName in this.commandInfo) {
       const Command = this.commandInfo[commandName].clz;
@@ -23,23 +25,28 @@ class MainCommand extends Command {
   }
 
   * [DISPATCH]() {
-    // reset --help and --version by default
+    // reset --version first by default
     this.yargs
-      .help()
       .version()
       .wrap(120)
-      .alias('h', 'help')
-      .alias('v', 'version')
-      .group([ 'help', 'version' ], 'Global Options:');
+      .alias('v', 'version');
 
-    // get parsed argument without handling helper and version
-    const parsed = yield this[PARSE](this.rawArgv);
+    let parsed = yield this[PARSE](this.rawArgv);
     if (parsed.version && !parsed._.length) {
       log.log(this.yargs.argv.version);
       /* istanbul ignore next */
       return;
     }
 
+    // after -v we load command
+    this.loadCommandInfo();
+    // then reset help by default
+    this.yargs
+      .help()
+      .alias('h', 'help')
+      .group([ 'help', 'version' ], 'Global Options:');
+
+    parsed = yield this[PARSE](this.rawArgv);
     if (parsed.help && !parsed._.length) {
       this.showHelp();
       /* istanbul ignore next */
@@ -84,25 +91,12 @@ class MainCommand extends Command {
    * @param {string} commandName - sub command name
    */
   checkCommand(clz, commandName) {
-    if (!this.LocalCommand) {
-      try {
-        const LocalLubCommandModulePath = resolver.resolve(
-          'lub-command',
-          path.join(process.cwd(), '__placeholder__.js')
-        );
-        this.LocalCommand = require(LocalLubCommandModulePath);
-      } catch (e /* istanbul ignore next */) {
-        log.error(
-          'can not find lub-command module in current project, please install it first'
-        );
-        process.exit(1);
-      }
-    }
-
-    const LocalCommand = this.LocalCommand;
+    // because lub-command module have different versions in a node project, so we use:
+    // `Object.getPrototypeOf(clz).name === 'LubCommand'`
+    // instead of clz.prototype instanceOf 'lub-command'
     assert(
-      clz.prototype instanceof LocalCommand,
-      `${commandName} class should be sub class of lub-command`
+      Object.getPrototypeOf(clz).name === 'LubCommand',
+      `${commandName} class should be sub class of lub-command, please check the version of lub and lub plugin remain the same.`
     );
   }
 

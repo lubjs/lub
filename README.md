@@ -37,7 +37,8 @@ npm install lub --save
 npx lub <subcommand>
 ```
 
-Or
+or
+
 ```bash
 npm install lub -g
 
@@ -116,6 +117,19 @@ module.exports = {
   }
 }
 ```
+
+### `lub init <pluginName>`
+
+When in a empty project, it's quit useful to exec `lub init <pluginName>`.
+It will:
+1. run `npm install <pluginName> --save-dev` install the plugin
+2. exec the init command of that plugin
+
+**Also supports extra optional argvs**
+- --client, -c: replace npm client with yours like: tnpm, yarn, cnpm
+  - default: 'npm'
+- --registry, -r: replace the npm registry
+  - default: 'https://registry.npmjs.org'
 
 ### --version / --help
 

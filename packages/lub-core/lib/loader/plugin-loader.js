@@ -37,9 +37,20 @@ function loadPluginConfig(pluginPath) {
   }
  */
 function loadPlugin(pluginName, importerPath) {
+  const InitCommand = require('../buildInCommand/InitCommand');
+  const defaultPluginInfo = {
+    init: {
+      clz: InitCommand,
+      config: undefined,
+      task: [],
+    },
+  };
+
   const cwd = process.cwd();
+  const isUpperProjectScene = !pluginName;
   let pluginPath = '';
-  if (!pluginName) {
+
+  if (isUpperProjectScene) {
     // in a upper application scene
     pluginPath = cwd;
   } else {
@@ -56,7 +67,7 @@ function loadPlugin(pluginName, importerPath) {
     }
   }
 
-  let pluginInfo = {};
+  let pluginInfo = isUpperProjectScene ? defaultPluginInfo : {};
 
   const pluginConfig = loadPluginConfig(pluginPath);
 
@@ -72,14 +83,12 @@ function loadPlugin(pluginName, importerPath) {
           (alias[current] && alias[current][command]) || command;
         prev[aliasCommand] = {
           clz: extendedPluginInfo[command].clz,
-          config: extendedPluginInfo[command].fromEntry
-            ? pluginConfig[current]
-            : undefined,
+          config: pluginConfig[current],
           task: task[command] || [],
         };
       }
       return prev;
-    }, {});
+    }, pluginInfo);
   }
 
   if (pluginName) {
@@ -90,7 +99,6 @@ function loadPlugin(pluginName, importerPath) {
         clz: entry[command],
         config: undefined,
         task: [],
-        fromEntry: true,
       };
     }
   }
