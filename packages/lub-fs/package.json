@@ -1,6 +1,6 @@
 {
   "name": "lub-fs",
-  "version": "0.1.1",
+  "version": "1.0.1-alpha.0",
   "description": "File system utils for lubjs",
   "keywords": [
     "lubjs",
