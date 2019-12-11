@@ -5,6 +5,7 @@ const log = require('lub-log')('lub-fs');
 const path = require('path');
 const minimatch = require('minimatch');
 const _ = require('underscore');
+const defaultTemplateSettings = require('./defaultTemplateSettings');
 
 /**
  *
@@ -34,6 +35,7 @@ function copyTplSync(options) {
 
   options.data = options.data || {};
   options.stringReplace = options.stringReplace || [];
+  _.templateSettings = defaultTemplateSettings;
   if (options.templateSettings) {
     _.templateSettings = options.templateSettings;
   }

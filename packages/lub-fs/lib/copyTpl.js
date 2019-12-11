@@ -6,12 +6,7 @@ const path = require('path');
 const minimatch = require('minimatch');
 const u = require('universalify').fromCallback;
 const _ = require('underscore');
-
-const defaultTemplateSettings = {
-  evaluate: /<%([\s\S]+?)%>/g,
-  interpolate: /<%=([\s\S]+?)%>/g,
-  escape: /<%-([\s\S]+?)%>/g,
-};
+const defaultTemplateSettings = require('./defaultTemplateSettings');
 
 /**
  *
